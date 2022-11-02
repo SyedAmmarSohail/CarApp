@@ -9,6 +9,7 @@ import androidx.compose.material.SnackbarDefaults.backgroundColor
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material.icons.outlined.KeyboardArrowDown
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -80,7 +81,7 @@ fun ComposeBorderText(
                 )
             }
             Spacer(modifier = Modifier.weight(1f))
-            Icon(imageVector = Icons.Default.ArrowDropDown, contentDescription = "dropDownIcon", tint = White)
+            Icon(imageVector = Icons.Outlined.KeyboardArrowDown, contentDescription = "dropDownIcon", tint = White)
 
         }
     }

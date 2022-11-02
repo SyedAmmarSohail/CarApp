@@ -10,10 +10,10 @@ import com.example.carapp.R
 
 val openSans = FontFamily(
     listOf(
-        Font(R.font.open_sans_regular, FontWeight.Normal),
-        Font(R.font.open_sans_medium, FontWeight.Medium),
-        Font(R.font.open_sans_semi_bold, FontWeight.SemiBold),
-        Font(R.font.open_sans_bold, FontWeight.Bold),
+        Font(R.font.signika_regular, FontWeight.Normal),
+        Font(R.font.signika_medium, FontWeight.Medium),
+        Font(R.font.signika_semi_bold, FontWeight.SemiBold),
+        Font(R.font.signika_bold, FontWeight.Bold),
     )
 )
 

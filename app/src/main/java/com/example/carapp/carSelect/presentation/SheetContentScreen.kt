@@ -11,6 +11,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
@@ -103,17 +104,21 @@ private fun ItemList(
             .background(
                 if (index % 2 == 0) LightIndigo else White
             )
-            .padding(
-                vertical = MaterialTheme.spacing.view_4x,
-                horizontal = MaterialTheme.spacing.view_4x
-            )
             .clickable {
                 onClick(value.title)
 
-            }.semantics {
+            }
+            .semantics {
                 contentDescription = "testItemType"
-            },) {
+            },
+        verticalAlignment = Alignment.CenterVertically
+    ) {
         Text(
+            modifier = Modifier
+                .padding(
+                    vertical = MaterialTheme.spacing.view_4x,
+                    horizontal = MaterialTheme.spacing.view_4x
+                ),
             text = value.title,
             color = DarkGray,
             style = MaterialTheme.typography.body1.copy(
@@ -123,6 +128,7 @@ private fun ItemList(
         )
         if (value.isPreviouslySelected)
             ComposeTextWithBackground(
+                modifier = Modifier.padding(end = MaterialTheme.spacing.view_4x),
                 text = stringResource(id = R.string.previously_selected),
                 textStyle = MaterialTheme.typography.caption.copy(
                     fontSize = MaterialTheme.fontSize.view_10x,
@@ -136,7 +142,12 @@ private fun ItemList(
 
 @Composable
 private fun placeHolderList() {
-    Box(modifier = Modifier.padding(vertical = MaterialTheme.spacing.view_4x)) {
+    Box(
+        modifier = Modifier.padding(
+            vertical = MaterialTheme.spacing.view_4x,
+            horizontal = MaterialTheme.spacing.view_4x
+        )
+    ) {
         Column {
             LinePlaceHolder()
         }
