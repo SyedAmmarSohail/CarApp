@@ -101,6 +101,7 @@ dependencies {
     testImplementation(Testing.turbine)
     testImplementation(Testing.composeUiTest)
     testImplementation(Testing.mockk)
+    testImplementation(Testing.coreTesting)
 
     androidTestImplementation(Testing.junit4)
     androidTestImplementation(Testing.junitAndroidExt)
@@ -112,5 +113,6 @@ dependencies {
     androidTestImplementation(Testing.hiltTesting)
     kaptAndroidTest(DaggerHilt.hiltCompiler)
     androidTestImplementation(Testing.testRunner)
-    androidTestImplementation(Testing.dexMaker)
+    androidTestImplementation(Testing.coreTesting)
+//    androidTestImplementation(Testing.dexMaker)
 }

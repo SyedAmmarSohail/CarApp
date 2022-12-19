@@ -16,6 +16,11 @@ import com.example.carapp.repository.CarRepositoryFake
 import com.example.carapp.ui.theme.CarAppTheme
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
+import io.mockk.MockKAnnotations
+import io.mockk.unmockkAll
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.runBlockingTest
+import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -25,23 +30,25 @@ import org.junit.runner.RunWith
 @MediumTest
 @RunWith(AndroidJUnit4::class)
 @ExperimentalComposeUiApi
+@ExperimentalCoroutinesApi
 @HiltAndroidTest
 class CarE2ETest {
 
-    @get:Rule(order = 0)
+    @get:Rule
     val hiltRule = HiltAndroidRule(this)
 
-    @get:Rule(order = 1)
+    @get:Rule
     val composeRule = createAndroidComposeRule<MainActivity>()
 
     private lateinit var carRepositoryFake: CarRepositoryFake
     private lateinit var carViewModel: CarViewModel
     private lateinit var carUsecase: CarUsecase
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     @Before
     fun setup() {
+        MockKAnnotations.init(this, relaxed = true)
         carRepositoryFake = CarRepositoryFake()
-
         carUsecase = CarUsecase(
             manufacturerUsecase = ManufacturerUsecase(carRepositoryFake),
             mainTypeUsecase = MainTypeUsecase(carRepositoryFake),
@@ -53,33 +60,36 @@ class CarE2ETest {
 
         composeRule.setContent {
             CarAppTheme {
-                CarScreen()
+                CarScreen(carViewModel)
             }
         }
     }
 
     @Test
-    fun showCarSummaryBySelectingData(){
-        setFakeRepositoryResult("Manufacturer")
+    fun selectingDataFromBottomSheet () : Unit = runBlockingTest{
 
-        composeRule.onNodeWithTag("testManufacturer").performClick()
+
+
+        setFakeRepositoryResult("Manufacturer")
         composeRule.onNodeWithTag("searchField").performTextInput("Manufacturer1")
+        composeRule.onNodeWithTag("testManufacturer").performClick()
+        composeRule.onNodeWithTag("testBottomSheet").assertIsDisplayed()
         composeRule.onAllNodesWithContentDescription("testItemType").onFirst().performClick()
 
         setFakeRepositoryResult("MainType")
 
-        composeRule.onNodeWithTag("testMainType").performClick()
         composeRule.onNodeWithTag("searchField").performTextInput("MainType1")
+        composeRule.onNodeWithTag("testMainType").performClick()
+        composeRule.onNodeWithTag("testBottomSheet").assertIsDisplayed()
         composeRule.onAllNodesWithContentDescription("testItemType").onFirst().performClick()
 
         setFakeRepositoryResult("BuiltDate")
 
+        composeRule.onNodeWithTag("searchField").performTextClearance()
         composeRule.onNodeWithTag("testBuiltDate").performClick()
-        composeRule.onNodeWithTag("searchField").performTextInput("BuiltDate1")
+        composeRule.onNodeWithTag("testBottomSheet").assertIsDisplayed()
         composeRule.onAllNodesWithContentDescription("testItemType").onFirst().performClick()
 
-        composeRule.onNodeWithTag("testSummaryButton").performClick()
-        composeRule.onNodeWithTag("testSummaryView").assertIsDisplayed()
     }
 
     private fun setFakeRepositoryResult(type: String) {
@@ -91,5 +101,10 @@ class CarE2ETest {
         carRepositoryFake.resultList = carMap
     }
 
+
+    @After
+    fun tearDown() {
+        unmockkAll()
+    }
 
 }

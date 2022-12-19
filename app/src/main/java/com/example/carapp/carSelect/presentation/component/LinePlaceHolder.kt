@@ -9,7 +9,6 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.example.carapp.ui.theme.spacing
-import kotlin.random.Random
 
 @Composable
 fun LinePlaceHolder(

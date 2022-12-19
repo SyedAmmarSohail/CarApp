@@ -32,10 +32,10 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalMaterialApi::class, ExperimentalComposeUiApi::class)
 @Composable
 fun CarScreen(
-    viewModel: CarViewModel = hiltViewModel()
+    viewModel: CarViewModel = hiltViewModel(),
+    coroutineScope : CoroutineScope = rememberCoroutineScope()
 ) {
     val bottomSheetScaffoldState = rememberModalBottomSheetState(ModalBottomSheetValue.Hidden)
-    val coroutineScope = rememberCoroutineScope()
     val context = LocalContext.current
 
     val listType = rememberSaveable { mutableStateOf(ListType.MANUFACTURER) }
@@ -303,7 +303,7 @@ private fun BuiltDateBorderText(
                     mainTypeValue.value
                 )
             )
-            bottomSheetScaffoldState.animateTo(ModalBottomSheetValue.Expanded)
+            bottomSheetScaffoldState.show()
         }
     }
 }
@@ -328,7 +328,7 @@ private fun MainTypeBorderText(
         coroutineScope.launch {
             listType.value = ListType.MAIN_TYPE
             viewModel.onEvent(CarEvent.OnGetMainType(manufacturerValue.value))
-            bottomSheetScaffoldState.animateTo(ModalBottomSheetValue.Expanded)
+            bottomSheetScaffoldState.show()
         }
     }
 }
@@ -352,7 +352,7 @@ private fun ManufacturerBorderText(
         coroutineScope.launch {
             listType.value = ListType.MANUFACTURER
             viewModel.onEvent(CarEvent.OnGetManufacturer)
-            bottomSheetScaffoldState.animateTo(ModalBottomSheetValue.Expanded)
+            bottomSheetScaffoldState.show()
         }
     }
 }

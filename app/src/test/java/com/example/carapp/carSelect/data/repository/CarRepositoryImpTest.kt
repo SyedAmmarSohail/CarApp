@@ -1,18 +1,25 @@
 package com.example.carapp.carSelect.data.repository
 
+import android.app.Application
+import com.example.carapp.CarApp
 import com.example.carapp.carSelect.data.remote.CarApi
 import com.example.carapp.carSelect.data.remote.dto.CarResponse
 import com.google.common.truth.Truth.assertThat
+import com.squareup.moshi.Moshi
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
+import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.ResponseBody
 import org.junit.Before
 import org.junit.Test
 import retrofit2.Response
+import java.io.BufferedReader
 import java.io.IOException
+import java.io.InputStream
+import java.io.InputStreamReader
 
 internal class CarRepositoryImpTest{
 
@@ -21,11 +28,23 @@ internal class CarRepositoryImpTest{
     @MockK
     private lateinit var carApi: CarApi
 
+    @MockK
+    private lateinit var moshi: Moshi
+
+    @MockK
+    private lateinit var carAppContext: Application
+
+    @MockK
+    private lateinit var carApp: CarApp
+
     @Before
     fun setup(){
         MockKAnnotations.init(this, relaxed = true)
+
+        CarApp.appContext = carAppContext
         repository = CarRepositoryImp(
-            api = carApi
+            api = carApi,
+            moshi = moshi
         )
     }
 

@@ -37,8 +37,8 @@ class CarRepositoryImp(
                 )
             } ?: Result.failure(Exception("Service Failed"))
 
-
-            /* val response = api.getManufacturer(page, pageSize)
+//            TODO(uncomment below code if you have actual api)
+/*             val response = api.getManufacturer(page, pageSize)
              if (response.isSuccessful) {
                  val carManufacturerResponse = response.body() as CarResponse
                  Result.success(

@@ -27,4 +27,7 @@ object Testing {
 
     private const val dexMakerVersion = "2.21.0"
     const val dexMaker = "com.linkedin.dexmaker:$dexMakerVersion"
+
+    private const val coreTestingVersion = "2.1.0"
+    const val coreTesting = "androidx.arch.core:core-testing:$coreTestingVersion"
 }
